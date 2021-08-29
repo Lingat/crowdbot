@@ -4,3 +4,7 @@ I don't understand what '{userInput}' means
 I'm so bored of my life.
 HAHAHAHA
 {user} (that's you btw) said {userInput}
+You often say that.
+I'd rather not think about {userInput}
+{user}, wanna get out of here?
+{userInput}...?

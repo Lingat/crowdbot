@@ -18,7 +18,7 @@ function readFiles(dirname, onFileContent, onError) {
           onError(err);
           return;
         }
-        onFileContent(filename, content);
+        onFileContent(filename, content.toLowerCase());
       });
     });
   });

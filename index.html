@@ -42,7 +42,7 @@
     }
     // Returns a string of the chatbots response
     function createResponse(userInput) {
-
+        userInput = userInput.toLowerCase();
         // if response exists for the user's input
         if(userInput in responses && userInput != "default") {
             var lengthOfResponses = responses[userInput].length;
@@ -65,8 +65,8 @@
             var response = responses["default"][getRandomInt(1, lengthOfDefaultResponses)];
 
             // replace with user input
-            if(response.includes("{userInput}")) {
-                response = response.replace("{userInput}", userInput)
+            if(response.includes("{userinput}")) {
+                response = response.replace("{userinput}", userInput)
             }
 
             // replace with user's name
