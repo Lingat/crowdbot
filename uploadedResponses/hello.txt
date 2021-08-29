@@ -1,0 +1,8 @@
+hello
+hey {user}
+hi {user}
+yo {user}
+yo yo {user}
+wassup {user}
+what up {user}
+ayeee {user}

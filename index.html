@@ -9,7 +9,95 @@
 
     </div>
     <input id = "chatInput" type="text">
-    <script src="main.js"></script>
+    <script>
+    /***
+    * CrowdBot
+    * Created by Pierre Lingat on 30/08/21
+    * A stupid idea to create a chatbot that learn from people
+    */
+    // Random 
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+    // Get the input field
+    var chatInput = document.getElementById("chatInput");
+    var chatDisplay = document.getElementById("chatDisplay");
+   
+
+    console.log(chatDisplay)
+
+    // Responses
+    const Http = new XMLHttpRequest();
+    const url='http://localhost:3000/user';
+    Http.open("GET", url);
+    Http.send();
+
+    var responses = {};
+    Http.onreadystatechange = (e) => {
+        responses = JSON.parse(Http.responseText)
+        console.log(typeof responses )
+        console.log(responses)
+    }
+    // Returns a string of the chatbots response
+    function createResponse(userInput) {
+
+        // if response exists for the user's input
+        if(userInput in responses && userInput != "default") {
+            var lengthOfResponses = responses[userInput].length;
+
+            // select a random response from txt
+            var response = responses[userInput][getRandomInt(1, lengthOfResponses)];
+
+            // replace with user's name
+            if(response.includes("{user}")) {
+                response = response.replace("{user}", "Pierre")
+            }
+            return response;
+        }
+
+        else {
+            // default responses
+            var lengthOfDefaultResponses = responses["default"].length;
+
+            // select a random response from txt
+            var response = responses["default"][getRandomInt(1, lengthOfDefaultResponses)];
+
+            // replace with user input
+            if(response.includes("{userInput}")) {
+                response = response.replace("{userInput}", userInput)
+            }
+
+            // replace with user's name
+            if(response.includes("{user}")) {
+                response = response.replace("{user}", "Pierre")
+            }
+            return response;
+        }
+
+        // should never get to here but just in case
+        return "I don't understand what '" + userInput + "' means."
+    }
+    // Execute a function when the user releases enter
+    // Should trigger a response by our chatbot and append the users input 
+    // to the display
+    chatInput.addEventListener("keyup", function(event) {
+    
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            chatDisplay.innerHTML += "<p><b>You:</b>" + chatInput.value + "</p>"
+            // TODO: add delay
+            chatDisplay.innerHTML += "<p><b>Bot:</b>" + createResponse(chatInput.value) + "</p>"
+            chatInput.value = ""
+
+            // scroll to bottom
+            chatDisplay.scrollTop = chatDisplay.scrollHeight;
+        }
+    });
+
+    </script>
 
 
   </body>
